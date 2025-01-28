@@ -1,28 +1,36 @@
+import SearchTodo from "../seach-todo/index.js";
+import Todos from "../todo/index.js";
+import { selectTodos } from "../../features/add-todo/addTodo.js";
+import { useSelector } from "react-redux";
+import type { Todo } from "../../features/add-todo/addTodo.js";
+import { selectFilter } from "../../features/add-todo/filterTodo.js";
+import { useEffect, useState } from "react";
+
 const TodoList = () => {
+    const todos = useSelector(selectTodos);
+    const filterType = useSelector(selectFilter);
+    const [data, setData] = useState<Todo[]>(todos.todos);
+    const { filter } = filterType;
+    useEffect(() => {
+        if (filter === "All") return setData(todos.todos);
+        if (filter === "Completed")
+            return setData(
+                todos.todos.filter((todo: Todo) => todo.completed === true)
+            );
+        if (filter === "Incompleted")
+            return setData(todos.todos.filter((todo: Todo) => !todo.completed));
+    }, [filter, todos.todos]);
+
+    // const renderTodos = todos.todos.map((todo: Todo) => {
+
+    //     return <Todos key={todo.id} todo={todo.todo} id={todo.id} completed={todo.completed} />;
+    // });
     return (
         <div>
-            <div className="search-input">
-                <div className="input relative flex items-center">
-                    <input
-                        className="bg-[#C4BABA5E] backdrop-blur-2xl placeholder:text-white border-none rounded-full text-2xl text-white py-2 px-4 w-full sm:w-auto pr-10"
-                        type="text"
-                        placeholder="Search..."
-                    />
-                    <div className="search-icon absolute right-2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            x="0px"
-                            y="0px"
-                            width="32"
-                            height="32"
-                            fill="white"
-                            viewBox="0 0 50 50"
-                        >
-                            <path d="M 21 3 C 11.622998 3 4 10.623005 4 20 C 4 29.376995 11.622998 37 21 37 C 24.712383 37 28.139151 35.791079 30.9375 33.765625 L 44.085938 46.914062 L 46.914062 44.085938 L 33.886719 31.058594 C 36.443536 28.083 38 24.223631 38 20 C 38 10.623005 30.377002 3 21 3 z M 21 5 C 29.296122 5 36 11.703883 36 20 C 36 28.296117 29.296122 35 21 35 C 12.703878 35 6 28.296117 6 20 C 6 11.703883 12.703878 5 21 5 z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
+            <SearchTodo />
+            {data.map((a: Todo) => (
+                <Todos key={a.id} todo={a.todo} id={a.id} completed={a.completed} />
+            ))}
         </div>
     );
 };
