@@ -8,10 +8,12 @@ export interface Todo {
 }
 interface todoState {
     todos: Todo[];
+    edit: { id: string | number; todo: string } | null;
 }
 
 const initialState: todoState = {
     todos: [],
+    edit: null,
 };
 
 const todoSlice = createSlice({
@@ -36,9 +38,25 @@ const todoSlice = createSlice({
                 todo.completed = !todo.completed;
             }
         },
+        editTodo: (
+            state,
+            action: PayloadAction<{ id: string | number; todo: string }>
+        ) => {
+            const todo = state.todos.find((todo) => todo.id === action.payload.id);
+            state.edit = todo ? todo : null;
+        },
+        submitUpdate: (state, action: PayloadAction<string>) => {
+            const todo = state.todos.find((todo) => todo.id === state.edit?.id);
+            if (todo) {
+                todo.todo = action.payload;
+            }
+            state.edit = null;
+        },
     },
 });
 
-export const { addTodo, deleteTodo, toggleTodo } = todoSlice.actions;
+export const { addTodo, deleteTodo, toggleTodo, editTodo, submitUpdate } =
+    todoSlice.actions;
 export const selectTodos = (state: RootState) => state.todos;
+export const selectEdit = (state: RootState) => state.todos.edit;
 export default todoSlice.reducer;

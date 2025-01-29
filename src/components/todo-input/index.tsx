@@ -1,30 +1,62 @@
-import { useRef } from "react";
+import React, { useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../features/add-todo/addTodo";
+import {
+    addTodo,
+    selectEdit,
+    submitUpdate,
+} from "../../features/add-todo/addTodo";
 import { filterTodo } from "../../features/add-todo/filterTodo";
+import { useSelector } from "react-redux";
 
 const TodoInput = () => {
     const dispatchTodo = useDispatch();
+    const select = useSelector(selectEdit);
+    const [edit, setEdit] = useState("");
+
     const ref = useRef<HTMLInputElement>(null);
-    function handleAdd() {
-        if (ref.current && ref.current.value) {
-            const todo = ref.current.value;
-            dispatchTodo(addTodo(todo));
+
+    useEffect(() => {
+        if (select) {
+            setEdit(select?.todo);
+        }
+    }, [select]);
+
+    const handleAdd = useCallback(() => {
+        if (!ref.current) return;
+
+        const trimmedEdit = edit.trim();
+        const trimmedValue = ref.current.value.trim();
+
+        if (trimmedEdit && select?.id) {
+            setEdit(trimmedEdit);
+            dispatchTodo(submitUpdate(trimmedEdit));
+            setEdit("");
+            return;
+        }
+        if (trimmedValue) {
+            dispatchTodo(addTodo(trimmedValue));
             ref.current.value = "";
         }
-    }
+    }, [edit, select?.id, dispatchTodo]);
+
     function handleFilter(e: React.ChangeEvent<HTMLSelectElement>) {
         dispatchTodo(filterTodo(e.target.value));
     }
+    function handleEditChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setEdit(e.target.value);
+    }
     return (
         <>
-            <div className="flex flex-col sm:flex-row gap-5 sm:gap-11 items-center sm:w-full">
+            <div className="flex flex-col justify-center p-4 sm:flex-row gap-5 sm:gap-11 items-center sm:w-full">
                 <div className="flex items-center gap-5 w-full sm:w-auto">
                     <input
                         className="bg-[#C4BABA5E] backdrop-blur-sm placeholder:text-white border-none rounded text-2xl text-white p-2 w-full sm:w-auto"
                         type="text"
                         placeholder="Add a task..."
                         ref={ref}
+                        value={edit}
+                        onChange={handleEditChange}
                     />
                     <button onClick={handleAdd} className="cursor-pointer bg-transparent">
                         <svg
@@ -67,4 +99,4 @@ const TodoInput = () => {
     );
 };
 
-export default TodoInput;
+export default React.memo(TodoInput);
