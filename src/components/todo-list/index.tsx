@@ -36,7 +36,7 @@ const TodoList = () => {
         dispatch(editTodo(todo));
     }
     return (
-        <div>
+        <div className="max-w-[400px] ">
             <div>
                 <SearchTodo search={search} setSearch={setSearch} />
             </div>

@@ -15,7 +15,13 @@ const Todos = (todo: Todo) => {
 
     return (
         <div className="flex justify-between items-center text-2xl text-white mt-2 py-2 px-4 bg-[#C4BABA5E] backdrop-blur-sm rounded-full">
-            <h1 className={todo.completed ? "line-through text-black" : ""}>
+            <h1
+                className={
+                    todo.completed
+                        ? "line-through text-black max-w-[300px] overflow-hidden whitespace-nowrap text-ellipsis"
+                        : "max-w-[300px] overflow-hidden whitespace-nowrap text-ellipsis"
+                }
+            >
                 {todo.todo}
             </h1>
             <div className="flex gap-3 items-center">
