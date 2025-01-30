@@ -1,3 +1,4 @@
+import React from "react";
 import SearchTodo from "../seach-todo/index.js";
 import Todos from "../todo/index.js";
 import { editTodo, selectTodos } from "../../features/add-todo/addTodo.js";
@@ -12,9 +13,16 @@ const TodoList = () => {
     const dispatch = useDispatch();
     const filterType = useSelector(selectFilter);
     const [data, setData] = useState<Todo[]>(todos.todos);
+    const [search, setSearch] = useState<string>("");
     const { filter } = filterType;
 
     useEffect(() => {
+        if (search) {
+            const filteredTodos = todos.todos.filter((todo: Todo) =>
+                todo.todo.toLowerCase().includes(search.toLowerCase())
+            );
+            return setData(filteredTodos);
+        }
         if (filter === "All") return setData(todos.todos);
         if (filter === "Completed")
             return setData(
@@ -22,7 +30,7 @@ const TodoList = () => {
             );
         if (filter === "Incompleted")
             return setData(todos.todos.filter((todo: Todo) => !todo.completed));
-    }, [filter, todos.todos, todos.edit]);
+    }, [filter, todos.todos, todos.edit, search]);
 
     function handleclick(todo: Todo) {
         dispatch(editTodo(todo));
@@ -30,7 +38,7 @@ const TodoList = () => {
     return (
         <div>
             <div>
-                <SearchTodo />
+                <SearchTodo search={search} setSearch={setSearch} />
             </div>
             <div>
                 {data.map((todo: Todo) => (
@@ -43,4 +51,4 @@ const TodoList = () => {
     );
 };
 
-export default TodoList;
+export default React.memo(TodoList);

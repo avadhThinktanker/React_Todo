@@ -3,3 +3,10 @@
 .backdrop-blur-sm {
   backdrop-filter: blur(8px);
 }
+.myclass{
+  @apply bg-white text-black;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

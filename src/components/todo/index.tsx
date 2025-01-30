@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 import type { Todo } from "../../features/add-todo/addTodo";
 import { deleteTodo, toggleTodo } from "../../features/add-todo/addTodo";
@@ -45,4 +46,4 @@ const Todos = (todo: Todo) => {
     );
 };
 
-export default Todos;
+export default React.memo(Todos);

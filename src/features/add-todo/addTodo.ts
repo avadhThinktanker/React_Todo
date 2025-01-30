@@ -9,11 +9,13 @@ export interface Todo {
 interface todoState {
     todos: Todo[];
     edit: { id: string | number; todo: string } | null;
+    searchTodo: string;
 }
 
 const initialState: todoState = {
     todos: [],
     edit: null,
+    searchTodo: "",
 };
 
 const todoSlice = createSlice({
@@ -52,10 +54,13 @@ const todoSlice = createSlice({
             }
             state.edit = null;
         },
+        searchTodos: (state, action: PayloadAction<string>) => {
+            state.searchTodo = action.payload;
+        }
     },
 });
 
-export const { addTodo, deleteTodo, toggleTodo, editTodo, submitUpdate } =
+export const { addTodo, deleteTodo, toggleTodo, editTodo, submitUpdate, searchTodos } =
     todoSlice.actions;
 export const selectTodos = (state: RootState) => state.todos;
 export const selectEdit = (state: RootState) => state.todos.edit;

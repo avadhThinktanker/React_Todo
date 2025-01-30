@@ -1,4 +1,18 @@
-const SearchTodo = () => {
+import React from "react";
+import { useDispatch } from "react-redux";
+import { searchTodos } from "../../features/add-todo/addTodo";
+
+interface SearchTodoProps {
+    search: string;
+    setSearch: (search: string) => void;
+}
+
+const SearchTodo = ({ search, setSearch }: SearchTodoProps) => {
+    const dispatch = useDispatch();
+    function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+        setSearch(e.target.value);
+        dispatch(searchTodos(e.target.value));
+    }
     return (
         <div className="search-input">
             <div className="input relative flex items-center">
@@ -6,6 +20,8 @@ const SearchTodo = () => {
                     className="bg-[#C4BABA5E] backdrop-blur-sm placeholder:text-white border-none rounded-full text-2xl text-white py-2 px-4 w-full sm:w-auto pr-10"
                     type="text"
                     placeholder="Search..."
+                    value={search}
+                    onChange={handleSearch}
                 />
                 <div className="search-icon absolute right-2">
                     <svg
@@ -25,4 +41,4 @@ const SearchTodo = () => {
     );
 };
 
-export default SearchTodo;
+export default React.memo(SearchTodo);
