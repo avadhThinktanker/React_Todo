@@ -26,13 +26,13 @@ function App() {
           <div className="bg-[#D9D9D980] backdrop-blur-sm py-1 px-4 rounded-3xl">
             <h1 className="text-[#C4564D] font-bold text-3xl">To-Do List</h1>
           </div>
+          <div className="absolute z-100 cursor-pointer top-6 right-10 bg-[#D9D9D980] backdrop-blur-sm p-2 rounded-full">
+            <button className="cursor-pointer text-white" onClick={handleTheme}>
+              Toggle Theme
+            </button>
+          </div>
           <TodoInput />
           <TodoList />
-        </div>
-        <div className="absolute z-100 cursor-pointer top-10 right-10 bg-[#D9D9D980] backdrop-blur-sm p-2 rounded-full">
-          <button className="cursor-pointer text-white" onClick={handleTheme}>
-            Toggle Theme
-          </button>
         </div>
       </div>
       {loading && (

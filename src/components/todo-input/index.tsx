@@ -49,7 +49,7 @@ const TodoInput = () => {
     return (
         <>
             <div className="flex flex-col justify-center p-4 sm:flex-row gap-5 sm:gap-11 items-center sm:w-full">
-                <div className="flex items-center gap-5 w-full sm:w-auto">
+                <div className="flex items-center gap-10 w-full sm:w-auto">
                     <input
                         className="bg-[#C4BABA5E] backdrop-blur-sm placeholder:text-white border-none rounded text-2xl text-white p-2 w-full sm:w-auto"
                         type="text"

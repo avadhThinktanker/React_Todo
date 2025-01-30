@@ -40,7 +40,7 @@ const TodoList = () => {
             <div>
                 <SearchTodo search={search} setSearch={setSearch} />
             </div>
-            <div>
+            <div className="todo-list max-h-[400px] overflow-y-scroll ">
                 {data.map((todo: Todo) => (
                     <div key={todo.id} onDoubleClick={() => handleclick(todo)}>
                         <Todos todo={todo.todo} id={todo.id} completed={todo.completed} />
