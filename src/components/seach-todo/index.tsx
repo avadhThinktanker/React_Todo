@@ -17,13 +17,21 @@ const SearchTodo = ({ search, setSearch }: SearchTodoProps) => {
         <div className="search-input">
             <div className="input relative flex items-center">
                 <input
+<<<<<<< HEAD
                     className="bg-[#C4BABA5E] backdrop-blur-sm placeholder:text-white border-none rounded-full text-2xl text-white py-2 px-4 w-full sm:w-auto pr-10"
+=======
+                    className="bg-[#C4BABA5E] backdrop-blur-sm placeholder:text-white border-none rounded-full text-2xl text-white py-2 px-4 w-full sm:w-auto "
+>>>>>>> dev
                     type="text"
                     placeholder="Search..."
                     value={search}
                     onChange={handleSearch}
                 />
+<<<<<<< HEAD
                 <div className="search-icon absolute right-2">
+=======
+                <div className="search-icon absolute right-4">
+>>>>>>> dev
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         x="0px"
