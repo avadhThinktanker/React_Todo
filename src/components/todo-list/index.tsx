@@ -36,19 +36,11 @@ const TodoList = () => {
         dispatch(editTodo(todo));
     }
     return (
-<<<<<<< HEAD
         <div>
             <div>
                 <SearchTodo search={search} setSearch={setSearch} />
             </div>
             <div>
-=======
-        <div className="max-w-[400px] ">
-            <div>
-                <SearchTodo search={search} setSearch={setSearch} />
-            </div>
-            <div className="todo-list max-h-[400px] overflow-y-scroll ">
->>>>>>> dev
                 {data.map((todo: Todo) => (
                     <div key={todo.id} onDoubleClick={() => handleclick(todo)}>
                         <Todos todo={todo.todo} id={todo.id} completed={todo.completed} />
